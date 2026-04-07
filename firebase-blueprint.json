@@ -1,0 +1,76 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User profile information including role and preferences.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string", "format": "uri" },
+        "role": { "type": "string", "enum": ["admin", "client"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Beauty products available in the Atelier.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "image": { "type": "string", "format": "uri" },
+        "size": { "type": "string" },
+        "benefits": { "type": "string" }
+      },
+      "required": ["id", "name", "price", "image"]
+    },
+    "CartItem": {
+      "title": "Cart Item",
+      "description": "An item in the user's shopping cart.",
+      "type": "object",
+      "properties": {
+        "productId": { "type": "string" },
+        "quantity": { "type": "integer" },
+        "addedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["productId", "quantity"]
+    },
+    "GeneratedImage": {
+      "title": "Generated Image",
+      "description": "Images generated or edited by the user using AI.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "prompt": { "type": "string" },
+        "imageUrl": { "type": "string", "format": "uri" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "userId": { "type": "string" }
+      },
+      "required": ["id", "prompt", "imageUrl", "userId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile data."
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Product catalog."
+    },
+    "/users/{userId}/cart/{cartId}": {
+      "schema": "CartItem",
+      "description": "User's shopping cart items."
+    },
+    "/users/{userId}/generatedImages/{imageId}": {
+      "schema": "GeneratedImage",
+      "description": "AI generated images for the user."
+    }
+  }
+}
